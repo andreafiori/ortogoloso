@@ -1,0 +1,52 @@
+
+<!-- <ng-container *ngIf="!hasInvoices else invoicesList">
+  <div class="">
+    <h3>Nessuna fattura inserita</h3>
+    <ng-template [ngTemplateOutlet]="addInvoiceButton"></ng-template>
+  </div>
+</ng-container> -->
+
+<ng-template [ngTemplateOutlet]="invoicesList"></ng-template>
+
+<ng-template #invoicesList>
+
+  <div class="text-end">
+    <ng-template [ngTemplateOutlet]="addInvoiceButton"></ng-template>
+  </div>
+
+  <div class="mt-4">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Numero/Anno</th>
+          <th>Data Emissione</th>
+          <th>Cliente</th>
+          <th>Totale (€)</th>
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let invoice of invoices; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ invoice.number }}/{{ invoice.year }}</td>
+          <td>{{ invoice.date }}</td>
+          <td>{{ invoice.clientName }}</td>
+          <td>{{ invoice.total | currency:'EUR' }}</td>
+          <td>
+            <button class="btn btn-info btn-sm me-2">Visualizza</button>
+            <button class="btn btn-warning btn-sm me-2">Esporta</button>
+            <button class="btn btn-danger btn-sm" (click)="deleteInvoice(i)">Elimina</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</ng-template>
+
+
+<ng-template #addInvoiceButton>
+  <form action="">
+    <button class="btn btn-primary mb-3" (click)="addInvoice()">Aggiungi Fattura</button>
+  </form>
+</ng-template>

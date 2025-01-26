@@ -1,0 +1,152 @@
+<h2>Aggiungi fattura</h2>
+
+<form [formGroup]="invoiceForm" (ngSubmit)="saveInvoice()">
+  <div class="row">
+    <div class="col-4">
+      <label for="number" class="form-label">Numero</label>
+      <input
+        id="number"
+        type="text"
+        formControlName="number"
+        class="form-control"
+      />
+    </div>
+    <div class="col-4">
+      <label for="year" class="form-label">Anno</label>
+      <input
+        id="year"
+        type="number"
+        formControlName="year"
+        class="form-control"
+      />
+    </div>
+    <div class="col-4">
+      <label for="date" class="form-label">Data emissione</label>
+      <input
+        id="date"
+        type="date"
+        formControlName="date"
+        class="form-control"
+      />
+    </div>
+
+    <!-- Customer data -->
+    <div class="col-12">
+      <fieldset class="border p-2">
+        <legend class="float-none w-auto p-2">Dati cliente</legend>
+
+        <div class="row">
+          <div class="col-6">
+            <label for="clientName" class="form-label">Nome</label>
+            <input
+              id="clientName"
+              type="text"
+              formControlName="clientName"
+              class="form-control"
+            />
+          </div>
+          <div class="col-6">
+            <label for="clientVAT" class="form-label">Partita IVA</label>
+            <input
+              id="clientVAT"
+              type="text"
+              maxlength="11"
+              formControlName="clientVAT"
+              class="form-control"
+            />
+          </div>
+        </div>
+      </fieldset>
+    </div>
+
+    <div class="col-12">
+
+      <fieldset class="border p-2 products-fieldset">
+        <legend class="float-none w-auto p-2">Prodotti e servizi</legend>
+        <div class="row">
+          <div class="col-12 text-end">
+            <button class="btn btn-primary" (click)="addProductOrService()">Aggiungi</button>
+          </div>
+
+          <div *ngIf="products.length > 0">
+            <div
+            formArrayName="products"
+            *ngFor="let control of products.controls; let i = index"
+          >
+            <ng-container [formGroupName]="i">
+              <div class="row">
+                <div class="col-2">
+                  <label [for]="'amount'+i" class="form-label">Prezzo</label>
+                  <input [id]="'amount'+i" type="number" class="form-control" formControlName="amount" />
+                </div>
+                
+                <div class="col-4">
+                  <label [for]="'paymentMode'+i" class="form-label">Modalit&agrave; pagamento</label>
+                  <select [id]="'paymentMode'+i" class="form-select" formControlName="paymentMode">
+                    <option value="">Seleziona</option>
+                    <option *ngFor="let paymentMode of invoicesOptions.paymentModes" [value]="paymentMode.code">{{ paymentMode.label }}</option>
+                  </select>
+                </div>
+      
+                <div class="col-4">
+                  <label [for]="'paymentSolution'+i" class="form-label">Estremi pagamento</label>
+                  <select [id]="'paymentSolution'+i" class="form-select" formControlName="paymentSolution">
+                    <option value="">Seleziona</option>
+                    <option *ngFor="let paymentSolution of invoicesOptions.paymentSolutions" [value]="paymentSolution.code">{{ paymentSolution.label }}</option>
+                  </select>
+                </div>
+      
+                <div class="col-2 text-end">
+                  <div class="mb-2">&nbsp;</div>
+                  <button class="btn btn-danger" (click)="onRemoveProduct(i)" *ngIf="products.length>1">Elimina</button>
+                </div>
+              </div>
+              <!-- TODO do not print after the last element -->
+              <div class="col-12">
+                <hr>
+              </div>
+            </ng-container>
+          </div>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+
+    <div class="col-12 text-end">
+      <label for="total" class="form-label">Totale {{ getTotal() }} &euro;</label>
+      <!-- <input
+        id="total"
+        type="number"
+        formControlName="total"
+        class="form-control"
+      /> -->
+    </div>
+
+    <div class="col-6 mt-3">
+      <button
+        type="submit"
+        class="btn btn-success"
+        [disabled]="invoiceForm.invalid"
+        title=""
+      >
+        Salva
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary ms-2"
+        (click)="onUndo()"
+        title=""
+      >
+        Annulla
+      </button>
+    </div>
+  </div>
+</form>
+
+<!-- <h3>Debug</h3>
+<pre>{{ invoiceForm.value | json }}</pre>
+<br>
+{{ invoiceForm.valid | json }}
+<br>
+{{ invoiceForm.errors | json }} -->
+ 
