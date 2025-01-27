@@ -98,7 +98,7 @@
       
                 <div class="col-2 text-end">
                   <div class="mb-2">&nbsp;</div>
-                  <button class="btn btn-danger" (click)="onRemoveProduct(i)" *ngIf="products.length>1">Elimina</button>
+                  <button type="button" class="btn btn-danger" (click)="onRemoveProduct(i)" *ngIf="products.length>1">Elimina</button>
                 </div>
               </div>
               <!-- TODO do not print after the last element -->
@@ -113,13 +113,7 @@
     </div>
 
     <div class="col-12 text-end">
-      <label for="total" class="form-label">Totale {{ getTotal() }} &euro;</label>
-      <!-- <input
-        id="total"
-        type="number"
-        formControlName="total"
-        class="form-control"
-      /> -->
+      <h4 for="total" class="form-label">Totale {{ getTotal() }} &euro;</h4>
     </div>
 
     <div class="col-6 mt-3">
@@ -143,10 +137,12 @@
   </div>
 </form>
 
-<!-- <h3>Debug</h3>
+<!--
+<h3>Debug</h3>
 <pre>{{ invoiceForm.value | json }}</pre>
 <br>
 {{ invoiceForm.valid | json }}
 <br>
-{{ invoiceForm.errors | json }} -->
+{{ invoiceForm.errors | json }}
+ -->
  

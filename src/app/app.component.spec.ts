@@ -22,6 +22,6 @@ describe('AppComponent', () => {
   it(`should have company name on env`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.companyName).toEqual(environment.companyName);
+    expect(app.companyName).toEqual(environment.company.name);
   });
 });

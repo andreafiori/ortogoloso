@@ -5,4 +5,5 @@ import { InvoicesAddComponent } from './components/invoices-add/invoices-add.com
 export const appRoutes: Route[] = [
   { path: '', component: InvoiceListComponent },
   { path: 'add-invoice', component: InvoicesAddComponent },
+  // { path: 'view-invoice', component: InvoicesViewComponent },
 ];

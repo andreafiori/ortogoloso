@@ -11,20 +11,35 @@ import { Router } from '@angular/router';
 export class InvoiceListComponent {
   
   invoices = JSON.parse(sessionStorage.getItem('invoices') || '[]');
+  invoiceIdToDelete = -1;
 
   get hasInvoices() {
-    return Object.keys(this.invoices).length > 0;
+    return this.getInvoicesLength() > 0;
   }
 
   constructor(private router: Router) {}
 
   addInvoice() {
-    this.router.navigate(['/add-invoice']);
+    const invoiceId = this.getInvoicesLength() + 1;
+
+    this.router.navigate(['/add-invoice'], { state: { invoiceId } });
   }
 
-  deleteInvoice(index: number) {
-    this.invoices.splice(index, 1);
+  viewInvoice(invoiceId: number) {
+    this.router.navigate(['/view-invoice'], { state: { invoiceId } });
+  }
+
+  deleteInvoiceConfirm(index: number) {
+    this.invoiceIdToDelete = index;
+  }
+
+  deleteInvoice() {
+    this.invoices.splice(this.invoiceIdToDelete, 1);
     sessionStorage.setItem('invoices', JSON.stringify(this.invoices));
+  }
+
+  private getInvoicesLength() {
+    return Object.keys(this.invoices).length;
   }
 
 }

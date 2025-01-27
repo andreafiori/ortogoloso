@@ -9,5 +9,7 @@ import { environment } from 'src/environments/environment.development';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  companyName = environment.companyName;
+  companyName = environment.company.name;
+
+  currentYear = new Date().getFullYear();
 }

@@ -9,8 +9,9 @@ import {
   FormArray,
   FormControl,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import { environment } from 'src/environments/environment.development';
 
 @Component({
   selector: 'app-invoices-add',
@@ -20,38 +21,21 @@ import { Subject } from 'rxjs';
   styleUrl: './invoices-add.component.scss',
 })
 export class InvoicesAddComponent implements OnInit, OnDestroy {
-  invoiceForm: FormGroup;
+  
   private destroy$ = new Subject<void>();
 
-  invoicesOptions = {
-    ivaPercentage: 10,
-    paymentModes: [
-      {
-        code: 'bonifico',
-        label: 'Bonifico bancario',
-      },
-      {
-        code: 'credit-card',
-        label: 'Carta di credito',
-      },
-    ],
-    paymentSolutions: [
-      {
-        code: 'unica',
-        label: 'Soluzione unica',
-      },
-      {
-        code: 'rate',
-        label: 'Rate',
-      },
-    ],
-  };
+  invoiceForm: FormGroup;
+  invoicesOptions = environment.invoicesOptions;
 
   get products(): FormArray {
     return this.invoiceForm.controls['products'] as FormArray;
   }
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private activeRoute: ActivatedRoute,
+  ) {
     this.invoiceForm = this.fb.group({
       number: ['', { validators: [Validators.required], asyncValidators: null }],
       year: [new Date().getFullYear(), { validators: [Validators.required], asyncValidators: null }],
@@ -68,9 +52,11 @@ export class InvoicesAddComponent implements OnInit, OnDestroy {
       total: ['', { validators: [Validators.required, Validators.min(0)], asyncValidators: null }],
     });
 
+    const invoiceIdFromState = this.router.getCurrentNavigation()?.extras?.state?.['invoiceId'];
     this.invoiceForm.patchValue({
-      number: 1,
+      number: invoiceIdFromState || 1,
     });
+
   }
 
   ngOnInit(): void {
