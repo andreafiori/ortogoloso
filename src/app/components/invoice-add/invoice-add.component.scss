@@ -1,18 +1,15 @@
-.border {
-    border-color: #000 !important;
-  }
   
-  .products-fieldset {
-    // overflow-y: auto;
-    // overflow-x: hidden;
-    // max-height: 200px;
-  }
-  
-  .invalid {
-    border: 1px solid #DC3545 !important;
-  }
-  
-  .invalid-text {
-    color: #DC3545 !important;
-  }
-  
+fieldset {
+  border: 1px solid #000 !important;
+  // overflow-y: auto;
+  // overflow-x: hidden;
+  // max-height: 200px;
+}
+
+.invalid {
+  border: 1px solid #DC3545 !important;
+}
+
+.invalid-text {
+  color: #DC3545 !important;
+}

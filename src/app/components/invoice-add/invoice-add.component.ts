@@ -23,7 +23,6 @@ import { environment } from 'src/environments/environment.development';
   ],
   templateUrl: './invoice-add.component.html',
   styleUrl: './invoice-add.component.scss',
-  standalone: true,
 })
 export class InvoiceAddComponent implements OnInit, OnDestroy {
   
