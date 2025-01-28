@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import {
   FormGroup,
   FormBuilder,
@@ -7,20 +7,25 @@ import {
   FormsModule,
   ReactiveFormsModule,
   FormArray,
-  FormControl,
+  AbstractControl,
 } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 
 @Component({
   selector: 'app-invoices-add',
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgIf,
+  ],
+  templateUrl: './invoice-add.component.html',
+  styleUrl: './invoice-add.component.scss',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
-  templateUrl: './invoices-add.component.html',
-  styleUrl: './invoices-add.component.scss',
 })
-export class InvoicesAddComponent implements OnInit, OnDestroy {
+export class InvoiceAddComponent implements OnInit, OnDestroy {
   
   private destroy$ = new Subject<void>();
 
@@ -34,7 +39,6 @@ export class InvoicesAddComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private activeRoute: ActivatedRoute,
   ) {
     this.invoiceForm = this.fb.group({
       number: ['', { validators: [Validators.required], asyncValidators: null }],
@@ -52,6 +56,8 @@ export class InvoicesAddComponent implements OnInit, OnDestroy {
       total: ['', { validators: [Validators.required, Validators.min(0)], asyncValidators: null }],
     });
 
+    this.invoiceForm.controls['number'].disable();
+
     const invoiceIdFromState = this.router.getCurrentNavigation()?.extras?.state?.['invoiceId'];
     this.invoiceForm.patchValue({
       number: invoiceIdFromState || 1,
@@ -66,6 +72,7 @@ export class InvoicesAddComponent implements OnInit, OnDestroy {
   addProductOrService() {
     const soldProductOrService = this.fb.group({
       amount: ['', [Validators.required, Validators.min(0)]],
+      description: ['', [Validators.required]],
       paymentSolution: ['', Validators.required],
       paymentMode: ['', Validators.required],
     });
@@ -81,7 +88,7 @@ export class InvoicesAddComponent implements OnInit, OnDestroy {
   saveInvoice() {
     if (this.invoiceForm.valid && this.products.length > 0) {
       const invoices = JSON.parse(sessionStorage.getItem('invoices') || '[]');
-      invoices.push(this.invoiceForm.value);
+      invoices.push(this.invoiceForm.getRawValue());
       sessionStorage.setItem('invoices', JSON.stringify(invoices));
       this.router.navigate(['/']);
     }
@@ -102,6 +109,16 @@ export class InvoicesAddComponent implements OnInit, OnDestroy {
 
   onUndo() {
     this.router.navigate(['/']);
+  }
+
+  isInvalid(controlName: string): boolean|null {
+    const control = this.invoiceForm.get(controlName);
+    return control && control.invalid && (control.touched || control.dirty);
+  }
+  
+  isInvalidProduct(formControl: AbstractControl, controlName: string): boolean|null {
+    const control = formControl.get(controlName);
+    return control && control.invalid && (control.touched || control.dirty);
   }
 
   ngOnDestroy(): void {

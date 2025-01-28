@@ -26,7 +26,13 @@ export class InvoiceListComponent {
   }
 
   viewInvoice(invoiceId: number) {
-    this.router.navigate(['/view-invoice'], { state: { invoiceId } });
+    const invoice  = this.invoices[invoiceId];
+    this.router.navigate(['/view-invoice'], { state: { invoice } });
+  }
+
+  sendInvoice(invoiceId: number) {
+    const invoice  = this.invoices[invoiceId];
+    this.router.navigate(['/send-invoice'], { state: { invoice } });
   }
 
   deleteInvoiceConfirm(index: number) {

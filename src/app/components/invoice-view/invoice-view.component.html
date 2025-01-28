@@ -1,0 +1,38 @@
+<div class="mt-4" *ngIf="invoice">
+    <h2>Fattura {{ invoice.number }}/{{ invoice.year }} del {{ invoice.date }}</h2>
+
+    <fieldset class="border p-2 mb-4">
+        <legend class="float-none w-auto p-2">Dati cliente</legend>
+
+        <div class="container">
+            <div><strong>Nome:</strong> {{ invoice.clientName }}</div>
+            <div><strong>Partita IVA:</strong> {{ invoice.clientVAT }}</div>
+        </div>
+    </fieldset>
+
+    <fieldset class="border p-2">
+        <legend class="float-none w-auto p-2">Prodotti e servizi acquistati</legend>
+
+        <div class="row container">
+            <div class="col-3"><strong>Prezzo</strong></div>
+            <div class="col-3"><strong>Descrizione</strong></div>
+            <div class="col-3"><strong>Modalit&agrave; pagamento</strong></div>
+            <div class="col-3"><strong>Estremi pagamento</strong></div>
+        </div>
+        <div class="row container" *ngFor="let product of invoice.products">
+            <div class="col-3">{{ product.amount }}</div>
+            <div class="col-3">{{ product.description }}</div>
+            <div class="col-3">{{ product.paymentSolution }}</div>
+            <div class="col-3">{{ product.paymentMode }}</div>
+        </div>
+    </fieldset>
+    
+    <div class="text-end">
+        <h3>Totale: {{ invoice.total }}</h3>
+    </div>
+
+</div>
+
+<form action="">
+    <button class="btn btn-primary" (click)="goBack()">Torna alla lista fatture</button>
+</form>

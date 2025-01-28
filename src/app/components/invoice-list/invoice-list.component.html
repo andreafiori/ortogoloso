@@ -4,7 +4,10 @@
 <ng-template #invoicesList>
 
   <div class="text-end">
-    <ng-template [ngTemplateOutlet]="addInvoiceButton"></ng-template>
+    <!-- <ng-template [ngTemplateOutlet]="addInvoiceButton"></ng-template> -->
+    <form action="">
+      <button class="btn btn-primary mb-3" (click)="addInvoice()"><i class="fa fa-plus"></i> Aggiungi Fattura</button>
+    </form>
   </div>
 
   <div class="mt-4">
@@ -29,10 +32,11 @@
           <td>{{ invoice.products.length }}</td>
           <td>{{ invoice.total | currency:'EUR' }}</td>
           <td class="text-end">
-            <button class="btn btn-info btn-sm me-2" (ciick)="viewInvoice(i)" title="Visualizza fattura"><i class="fa fa-eye"></i></button>
-            <!-- <button class="btn btn-warning btn-sm me-2" title="Esporta fattura"><i class="fa-solid fa-file-pdf"></i></button>
-            <button class="btn btn-success btn-sm me-2" title="Invia fattura"><i class="fa-regular fa-envelope"></i></button> -->
-            <button class="btn btn-danger btn-sm" (click)="deleteInvoiceConfirm(i)" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" title="Elimina fattura"><i class="fa fa-trash"></i></button>
+            <button type="button" class="btn btn-info btn-sm me-2" (click)="viewInvoice(i)" title="Visualizza fattura"><i class="fa fa-eye"></i></button>
+            <!-- <button class="btn btn-warning btn-sm me-2" title="Esporta fattura"><i class="fa-solid fa-file-pdf"></i></button> -->
+            <!-- <button class="btn btn-success btn-sm me-2" data-bs-toggle="modal" data-bs-target="#sendInvoiceModal" title="Invia fattura"><i class="fa-regular fa-envelope"></i></button> -->
+            <button class="btn btn-success btn-sm me-2" title="Invia fattura" (click)="sendInvoice(i)"><i class="fa-regular fa-envelope"></i></button>
+            <button type="button" class="btn btn-danger btn-sm" (click)="deleteInvoiceConfirm(i)" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" title="Elimina fattura"><i class="fa fa-trash"></i></button>
           </td>
         </tr>
       </tbody>
@@ -42,26 +46,19 @@
 
 <!-- Modal confirm delete invoice -->
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-<div class="modal-dialog">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h5 class="modal-title" id="confirmDeleteModalLabel">Conferma eliminazione fattura</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="modal" 
-     aria-label="Close"></button>
-    </div>
-    <div class="modal-body">
-      Sei sicuro di voler eliminare la fattura corrente?
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-      <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteInvoice()">Conferma</button>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmDeleteModalLabel">Conferma eliminazione fattura</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Sei sicuro di voler eliminare la fattura corrente?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteInvoice()">Conferma</button>
+      </div>
     </div>
   </div>
 </div>
-</div>
-
-<ng-template #addInvoiceButton>
-  <form action="">
-    <button class="btn btn-primary mb-3" (click)="addInvoice()">Aggiungi Fattura</button>
-  </form>
-</ng-template>
