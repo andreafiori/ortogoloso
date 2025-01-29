@@ -8,4 +8,4 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-CMD ["npx", "http-server", "dist/apps/frontend", "-p", "4200"]
+CMD ["npx", "http-server", "dist/ortogoloso/browser", "-p", "4200"]

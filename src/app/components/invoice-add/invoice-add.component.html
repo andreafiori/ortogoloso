@@ -77,16 +77,17 @@
         <legend class="float-none w-auto p-2">Prodotti e servizi</legend>
         <div class="row">
           <div class="col-12 text-end">
-            <button class="btn btn-primary" (click)="addProductOrService()">Aggiungi</button>
+            <button class="me-2 btn btn-primary" (click)="addProductOrService()">Aggiungi</button>
           </div>
 
           <div *ngIf="products.length > 0">
             <div
-            formArrayName="products"
-            *ngFor="let control of products.controls; let i = index"
-          >
+              formArrayName="products"
+              *ngFor="let control of products.controls; let i = index"
+            >
             <ng-container [formGroupName]="i">
-              <div class="row">
+              <!-- MOVE STYLE IN SCSS -->
+              <div class="row p-2 pb-4 m-2 products-list-container">
                 <div class="col-2">
                   <label [for]="'amount'+i" class="form-label" [class.invalid-text]="isInvalidProduct(control, 'amount')">Prezzo</label>
                   <input [id]="'amount'+i" type="number" class="form-control border-dark" [class.invalid]="isInvalidProduct(control, 'amount')" formControlName="amount" />
@@ -117,14 +118,10 @@
                   <div *ngIf="isInvalidProduct(control, 'paymentSolution')" class="text-danger">Campo obbligatorio</div>
                 </div>
       
-                <div class="col-3 text\-end">
+                <div class="col-3 text-end">
                   <div class="mb-2">&nbsp;</div>
                   <button type="button" class="btn btn-danger" (click)="onRemoveProduct(i)" *ngIf="products.length>1">Elimina</button>
                 </div>
-              </div>
-              <!-- TODO do not print after the last element -->
-              <div class="col-12">
-                <hr>
               </div>
             </ng-container>
           </div>

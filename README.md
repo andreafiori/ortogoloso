@@ -14,6 +14,15 @@ npm install
 
 In case of problems with the installation with another node version, remove the `package.json` file, the `node_modules` directory and retry.
 
+## Configurations
+
+Environment.ts contains:
+
+- Company name
+- IVA\VAT percentage
+- Payment modes list
+- Payment solutions list
+
 
 ## Install Nx Console (optional but reommended)
 
@@ -21,6 +30,19 @@ Nx Console is an editor extension that enriches your developer experience. It le
 
 [Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
 
+## Docker
+
+```sh
+docker compose build
+docker compose up
+```
+
+## Technologies
+
+- Angular 19
+- Jest
+- Sass
+- Bootstrap 5
 
 ## Run tasks
 
@@ -49,3 +71,14 @@ These targets are either [inferred automatically](https://nx.dev/concepts/inferr
 ## Finish the CI setup
 
 [Click here to finish setting up your workspace!](https://cloud.nx.app/connect/sx3X637Yrv)
+
+
+## TODO
+
+Many further improvements are possible:
+
+- Internationalization
+- Backend interaction
+- Improve data models
+- Testing integration
+- Browser automation tests
