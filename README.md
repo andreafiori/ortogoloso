@@ -16,7 +16,7 @@ In case of problems with the installation with another node version, remove the 
 
 ## Configurations
 
-Environment.ts contains:
+`environment.ts` contains:
 
 - Company name
 - IVA\VAT percentage
@@ -24,7 +24,7 @@ Environment.ts contains:
 - Payment solutions list
 
 
-## Install Nx Console (optional but reommended)
+## Install Nx Console (optional but highly recommended)
 
 Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
 
